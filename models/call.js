@@ -15,13 +15,13 @@ class Call extends Model {
     this.valuePerMinute = valuePerMinute
   }
 
-  getOrigin () {
-    return this.origin
-  }
+  // getOrigin () {
+  //   return this.origin
+  // }
 
-  getDestiny () {
-    return this.destiny
-  }
+  // getDestiny () {
+  //   return this.destiny
+  // }
 
   getValuePerMinute () {
     return this.valuePerMinute

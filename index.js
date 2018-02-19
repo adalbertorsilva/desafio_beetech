@@ -2,19 +2,18 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 require('dotenv').config()
-
-const Call = require('./models/call')
+const seed = require('./seed')
 
 mongoose.connect(process.env.DB_CONNECTION_URL)
-
-const call = new Call(91, 11, 1)
-call.save()
+seed()
 
 const app = express()
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
-app.listen(3000, () => {
-  console.log('SERVER UP !!!!')
-})
+require('./routes/plan')(app)
+require('./routes/client')(app)
+require('./routes/simulation')(app)
+
+module.exports = app

@@ -1,6 +1,6 @@
-const Call = require('../models/call')
-const Plan = require('../models/plan')
-const Simulation = require('../models/simulation')
+const Call = require('../../models/call')
+const Plan = require('../../models/plan')
+const Simulation = require('../../models/simulation')
 
 describe('Simulation', () => {
   const callFrom011To016 = new Call(11, 16, 1.9)

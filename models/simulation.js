@@ -14,21 +14,24 @@ class Simulation {
   }
 
   calculateSurplusValue () {
-    const surplusMinutes = this.duration - this.plan.minutes
-    const surplusValue = surplusMinutes * this.call.valuePerMinute
+    const surplusMinutes = this.duration - this.plan.getMinutes()
+    const surplusValue = surplusMinutes * this.call.getValuePerMinute()
     return surplusValue + this.calculatePercentage(surplusValue, 10)
+  }
+
+  calculateVAlueWithAPlan () {
+    if (this.plan.getMinutes() > this.duration) {
+      return 0
+    } else {
+      return this.calculateSurplusValue()
+    }
   }
 
   calculateCallValue () {
     if (!this.plan) {
       return this.calculateValueWithoutAPlan()
     }
-
-    if (this.plan.minutes > this.duration) {
-      return 0
-    } else {
-      return this.calculateSurplusValue()
-    }
+    return this.calculateVAlueWithAPlan()
   }
 
   runSimulation () {
