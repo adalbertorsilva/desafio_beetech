@@ -8,6 +8,7 @@ class SimulationController {
 
     return Plan.findById(req.body.plan)
       .then(retrievedPlan => {
+        console.log('O QUE CHEGOU ??????????????? ', req.body)
         plan = retrievedPlan
         return Call.findOne({origin: req.body.origin, destiny: req.body.destiny})
       })

@@ -1,10 +1,12 @@
-const http = require('http')
+// const http = require('http')
 const app = require('../index')
 
-const port = parseInt(process.env.PORT, 10) || 8000
-app.set('port', port)
+const PORT = parseInt(process.env.PORT, 10) || 8000
+app.set('port', PORT)
 
-const server = http.createServer(app)
-server.listen(port)
+// const server = http.createServer(app)
+// server.listen(PORT)
 
-console.log(`-------------------------------------  Server up on port ${port} -------------------------------------`)
+app.listen(PORT)
+
+console.log(`-------------------------------------  Server up on port ${PORT} -------------------------------------`)
