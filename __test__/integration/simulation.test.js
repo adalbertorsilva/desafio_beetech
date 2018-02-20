@@ -1,97 +1,87 @@
 const request = require('supertest')
 const app = require('../../index')
 const Plan = require('../../models/plan')
-const Call = require('../../models/call')
 
 describe('Simulation', () => {
-  afterAll(() => {
-    Call.remove({})
-    Plan.remove({})
-  })
-
+  afterAll(async () => Plan.remove({}))
   describe("Test simulation's execution with a plan", () => {
-    it('should return a 200 status and a object', () => {
-      return Plan.create(new Plan(30))
-        .then(plan => {
-          const payload = {
-            plan: plan._id,
-            origin: 11,
-            destiny: 16,
-            duration: 40
-          }
-          return request(app)
-            .post('/simulations')
-            .set('Accept', 'application/json')
-            .send(payload)
-        })
-        .then(response => {
-          expect(response.statusCode).toBe(200)
-          expect(response.body).toHaveProperty('callValue', 20.9)
-          expect(response.body).toHaveProperty('showClientModal', false)
-        })
+    it('should return a 200 status and a object', async () => {
+      const plan = await Plan.create(new Plan(30))
+      const payload = {
+        plan: plan._id,
+        origin: 11,
+        destiny: 16,
+        duration: 40
+      }
+
+      const response = await request(app)
+        .post('/simulations')
+        .set('Accept', 'application/json')
+        .send(payload)
+
+      expect(response.statusCode).toBe(200)
+      expect(response.body).toHaveProperty('callValue', 20.9)
+      expect(response.body).toHaveProperty('showClientModal', false)
     })
   })
 
   describe("Test simulation's execution without a plan", () => {
-    it('should return a 200 status and a object', () => {
+    it('should return a 200 status and a object', async () => {
       const payload = {
         plan: null,
         origin: 11,
         destiny: 16,
         duration: 40
       }
-      return request(app)
+
+      const response = await request(app)
         .post('/simulations')
         .set('Accept', 'application/json')
         .send(payload)
-        .then(response => {
-          expect(response.statusCode).toBe(200)
-          expect(response.body).toHaveProperty('callValue', 76)
-          expect(response.body).toHaveProperty('showClientModal', false)
-        })
+
+      expect(response.statusCode).toBe(200)
+      expect(response.body).toHaveProperty('callValue', 76)
+      expect(response.body).toHaveProperty('showClientModal', false)
     })
   })
 
   describe("Test simulation's execution with a 30 minutes plan and duration is 10 minutes ", () => {
-    it('should return a 200 status and a object', () => {
-      return Plan.create(new Plan(30))
-        .then(plan => {
-          const payload = {
-            plan: plan._id,
-            origin: 11,
-            destiny: 16,
-            duration: 10
-          }
-          return request(app)
-            .post('/simulations')
-            .set('Accept', 'application/json')
-            .send(payload)
-        })
-        .then(response => {
-          expect(response.statusCode).toBe(200)
-          expect(response.body).toHaveProperty('callValue', 0)
-          expect(response.body).toHaveProperty('showClientModal', false)
-        })
+    it('should return a 200 status and a object', async () => {
+      const plan = await Plan.create(new Plan(30))
+      const payload = {
+        plan: plan._id,
+        origin: 11,
+        destiny: 16,
+        duration: 10
+      }
+
+      const response = await request(app)
+        .post('/simulations')
+        .set('Accept', 'application/json')
+        .send(payload)
+
+      expect(response.statusCode).toBe(200)
+      expect(response.body).toHaveProperty('callValue', 0)
+      expect(response.body).toHaveProperty('showClientModal', false)
     })
   })
 
   describe("Test simulation's execution without a registered call", () => {
-    it('should return a 200 status and a object', () => {
+    it('should return a 200 status and a object', async () => {
       const payload = {
         plan: null,
         origin: 99,
         destiny: 16,
         duration: 40
       }
-      return request(app)
+      const response = await request(app)
         .post('/simulations')
         .set('Accept', 'application/json')
         .send(payload)
-        .then(response => {
-          expect(response.statusCode).toBe(200)
-          expect(response.body).toHaveProperty('callValue', 0)
-          expect(response.body).toHaveProperty('showClientModal', true)
-        })
+
+      expect(response.statusCode).toBe(200)
+      expect(response.body).toHaveProperty('callValue', 0)
+      expect(response.body).toHaveProperty('showClientModal', true)
     })
   })
 })
