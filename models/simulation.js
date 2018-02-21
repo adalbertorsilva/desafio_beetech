@@ -20,26 +20,15 @@ class Simulation {
   }
 
   calculateVAlueWithAPlan () {
-    if (this.plan.getMinutes() > this.duration) {
-      return 0
-    } else {
-      return this.calculateSurplusValue()
-    }
+    return this.plan.getMinutes() > this.duration ? 0 : this.calculateSurplusValue()
   }
 
   calculateCallValue () {
-    if (!this.plan) {
-      return this.calculateValueWithoutAPlan()
-    }
-    return this.calculateVAlueWithAPlan()
+    return !this.plan ? this.calculateValueWithoutAPlan() : this.calculateVAlueWithAPlan()
   }
 
   runSimulation () {
-    if (!this.call || !this.duration) {
-      return 0
-    }
-
-    return this.calculateCallValue()
+    return (!this.call || !this.duration) ? 0 : this.calculateCallValue()
   }
 }
 

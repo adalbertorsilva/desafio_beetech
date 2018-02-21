@@ -14,15 +14,7 @@ class Call extends Model {
     this.destiny = destiny
     this.valuePerMinute = valuePerMinute
   }
-
-  // getOrigin () {
-  //   return this.origin
-  // }
-
-  // getDestiny () {
-  //   return this.destiny
-  // }
-
+  
   getValuePerMinute () {
     return this.valuePerMinute
   }
