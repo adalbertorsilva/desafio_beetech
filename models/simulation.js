@@ -19,7 +19,7 @@ class Simulation {
     return surplusValue + this.calculatePercentage(surplusValue, 10)
   }
 
-  calculateVAlueWithAPlan () {
+  calculateValueWithAPlan () {
     return this.plan.getMinutes() > this.duration ? 0 : this.calculateSurplusValue()
   }
 
