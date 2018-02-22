@@ -5,10 +5,6 @@ class Simulation {
     this.duration = duration
   }
 
-  calculateValueWithoutAPlan () {
-    return this.duration * this.call.valuePerMinute
-  }
-
   calculatePercentage (value, percentage) {
     return value * percentage / 100
   }
@@ -19,12 +15,16 @@ class Simulation {
     return surplusValue + this.calculatePercentage(surplusValue, 10)
   }
 
+  calculateValueWithoutAPlan () {
+    return this.duration * this.call.valuePerMinute
+  }
+
   calculateValueWithAPlan () {
     return this.plan.getMinutes() > this.duration ? 0 : this.calculateSurplusValue()
   }
 
   calculateCallValue () {
-    return !this.plan ? this.calculateValueWithoutAPlan() : this.calculateVAlueWithAPlan()
+    return !this.plan ? this.calculateValueWithoutAPlan() : this.calculateValueWithAPlan()
   }
 
   runSimulation () {
