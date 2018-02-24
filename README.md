@@ -8,6 +8,7 @@
 - Node 8.9.4 ( ou superior )
 - NPM 5.6.0
 - Git
+- MongoDB
 
 ### Instalação
 - Clonar o repositório ( git clone https://github.com/adalbertorsilva/desafio_beetech.git )
